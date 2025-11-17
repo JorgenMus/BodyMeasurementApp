@@ -17,9 +17,6 @@ type Gender = 'male'|'female';
     IonLabel, IonDatetime]
 })
 export class UserCreatePage implements OnInit {
-
-  //userHeightInput = new FormControl<string>('')
-
   inputName = new FormControl<string>('')
   inputDateOfBirth = new FormControl('')
   inputHeight = new FormControl<number>(0)

@@ -22,6 +22,11 @@ export const routes: Routes = [
           import('../statistics/statistics.page').then((m) => m.StatisticsPage),
       },
       {
+        path: 'user-create',  // form - when creating a new user
+        loadComponent: () =>
+          import('../user-create/user-create.page').then((m) => m.UserCreatePage),
+      },
+      {
         path: '',
         redirectTo: '/tabs/users',
         pathMatch: 'full',

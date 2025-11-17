@@ -1,0 +1,124 @@
+<!--
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Create user</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">user-create</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-input
+          id="user_name_input"
+          label="Name"
+          placeholder="type desired name"
+          labelPlacement="stacked"
+          errorText="Inputed name is invalid.">
+      </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Date of Birth</ion-label>
+        <ion-datetime class="ion-margin-top" presentation="date" [preferWheel]="true"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          label="Height (cm)"
+          type="number"
+          labelPlacement="stacked"
+          placeholder="height in cm"
+          errorText="Invalid value for height."
+          [formControl]="userHeightInput">
+        </ion-input>
+      </ion-item>
+      <ion-list>
+        <ion-radio-group value="male">
+          <ion-item>
+            <ion-label>Gender</ion-label>
+            <ion-radio labelPlacement="stacked" value="male">Male</ion-radio><br />
+            <ion-radio labelPlacement="stacked" value="female">Female</ion-radio><br />
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+    </ion-list>
+  </ion-list>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="center">
+    <ion-fab-button>
+    Create
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+-->
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Create user</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Create user</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-list>
+    <ion-list>
+
+      <ion-item>
+        <ion-input
+          [formControl]="inputName"
+          label="Name"
+          placeholder="type desired name"
+          labelPlacement="stacked"
+          errorText="Inputed name is invalid.">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Date of Birth</ion-label>
+        <ion-datetime 
+          [formControl]="inputDateOfBirth"
+          class="ion-margin-top"
+          presentation="date"
+          [preferWheel]="true">
+        </ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="Height (cm)"
+          type="number"
+          labelPlacement="stacked"
+          placeholder="height in cm"
+          errorText="Invalid value for height."
+          [formControl]="inputHeight">
+        </ion-input>
+      </ion-item>
+
+      <ion-list>
+        <ion-radio-group value="male" [formControl]="inputGender">
+          <ion-item>
+            <ion-label>Gender</ion-label>
+            <ion-radio labelPlacement="stacked" value="male">Male</ion-radio><br />
+            <ion-radio labelPlacement="stacked" value="female">Female</ion-radio><br />
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+
+    </ion-list>
+  </ion-list>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="center">
+    <ion-fab-button (click)="createNewUser()">
+    Create
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel } from '@ionic/angular/standalone';
 
+import {Router} from '@angular/router';
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.page.html',
@@ -12,9 +14,14 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel } from '@ionic/an
 })
 export class UsersPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  createNewUser()
+  {
+    this.router.navigate(['/tabs/user-create']);
   }
 
 }

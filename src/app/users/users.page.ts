@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel } from '@ionic/angular/standalone';
 
 import {Router} from '@angular/router';
+import { StoreService, UserData } from '../services/store.service';
 
 @Component({
   selector: 'app-users',
@@ -14,9 +15,14 @@ import {Router} from '@angular/router';
 })
 export class UsersPage implements OnInit {
 
-  constructor(private router: Router) { }
+  // TODO decide if storing users here is a good idea
+
+  constructor(private router: Router, private store: StoreService) { }
 
   ngOnInit() {
+    // attempt to refresh page when displayed
+    await this.store.loadUsers();
+    this.users = 
   }
 
   createNewUser()

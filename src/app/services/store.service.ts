@@ -79,7 +79,8 @@ export class StoreService {
     if (id)
     {
       // check if id exists among users
-
+      // TODO
+      
       // store selected user
       await Preferences.set({key: KEY_SELECTED_USER, value: id});
     }

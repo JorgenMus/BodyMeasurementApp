@@ -19,7 +19,7 @@ const newId = () =>
   imports: [
     ReactiveFormsModule, IonFab, IonFabButton, IonRadioGroup,
     IonRadio, IonList, IonInput, IonItem, IonContent, IonHeader,
-    IonTitle, IonToolbar, CommonModule, FormsModule, IonButton,
+    IonTitle, IonToolbar, CommonModule, FormsModule,
     IonLabel, IonDatetime]
 })
 export class UserCreatePage implements OnInit {
@@ -45,6 +45,6 @@ export class UserCreatePage implements OnInit {
     await this.store.loadUsers();            // refresh in-memory cache
     await this.store.storeUser(user);        // just stores (no id creation)
     await this.store.setSelectedUser(user.id);
-    this.router.navigate(['/tabs/users']);   // or '/tabs/measurements'
+    this.router.navigate(['/tabs/users']);   // or '/tabs/measurements' i will decide later  // TODO
   }
 }

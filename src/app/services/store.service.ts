@@ -9,7 +9,7 @@ export interface UserData
 {
   id: string;  // unique id of each user
   name: string;
-  dateOfBirth: ISODate;  // e.g. "1990-08-30"
+  dateOfBirth: ISODate;  // format: "1990-08-30"
   heightCm: number;  //cm
   gender: genderType;
 }

@@ -8,7 +8,8 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel } from '@ionic/an
   templateUrl: './measurements.page.html',
   styleUrls: ['./measurements.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonLabel]
+  imports: [IonContent, IonHeader, IonTitle,
+    IonToolbar, CommonModule, FormsModule, IonLabel]
 })
 export class MeasurementsPage implements OnInit {
 

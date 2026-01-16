@@ -135,6 +135,7 @@ export class StoreService {
     // return user data that matched selected user's ID or return NULL
     return this.users.find(u => u.id === this.selectedUserId) ?? null;
   }
+  
   // method for retrieving users from memory
   async loadUsers(): Promise<void>{
     // value is data from the memory (preferences - users)
@@ -151,13 +152,22 @@ export class StoreService {
 
   // method returns the ID of a currently selected user
   async getSelectedUserId(): Promise<string | null> {
+
+    // reload from preferences (in case of restart of the app)
+    const {value} = await Preferences.get({
+      key: KEY_SELECTED_USER
+    });
+
+    this.selectedUserId = value ?? null;
+
     return this.selectedUserId;
   }
 
   // method for storing a measurement for a user
   async storeMeasurement(userMeasurementData: UserMeasurementData): Promise<void>
   {
-    // update measurements
+    // update measurements and users
+    await this.loadUsers();
     await this.loadMeasurements();
 
     // check if user from measurements exists
@@ -202,7 +212,7 @@ export class StoreService {
     await this.loadMeasurements();
 
     // delete given measurement by filtering it out
-    this.measurements = this.measurements.filter(m=>m.measurementId === measurementId);
+    this.measurements = this.measurements.filter(m=>m.measurementId !== measurementId);
 
     // update preferences
     await Preferences.set({

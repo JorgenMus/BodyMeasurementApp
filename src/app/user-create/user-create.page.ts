@@ -33,7 +33,8 @@ export class UserCreatePage implements OnInit {
   ngOnInit() {
   }
 
-    async createNewUser() {
+  async createNewUser()
+  {
     const user: UserData = {
       id: newId(),
       name: (this.inputName.value ?? '').trim(),

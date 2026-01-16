@@ -1,19 +1,65 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Measurements</ion-title>
+
+    <div class="title-block">
+      <div class="title-main">Measurements</div>
+      <div class="title-sub">
+        @if (selectedUser) {
+          {{ selectedUser.name }}
+        } @else {
+          No user selected
+        }
+      </div>
+    </div>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="openCreateMeasurement()">Add</ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Measurements</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div class="ion-text-center">
-    <ion-label>
-      This is Measurements page
-    </ion-label>
-  </div>
+  @if (!selectedUserId) {
+    <div class="ion-padding ion-text-center">
+      <p>No user selected.</p>
+      <ion-button (click)="goToUsers()">Go to Users</ion-button>
+    </div>
+  } @else {
+
+    @if (measurements.length === 0) {
+      <div class="ion-padding ion-text-center">
+        <p>No measurements yet.</p>
+        <ion-button (click)="openCreateMeasurement()">Add first measurement</ion-button>
+      </div>
+    } @else {
+
+      <ion-list>
+        @for (m of measurements; track m.measurementId) {
+          <ion-item>
+            <ion-label>
+              <h2>{{ m.measurementDateISO }}</h2>
+              <p>
+                Weight: {{ m.weightKg ?? '-' }} kg |
+                Belly: {{ m.belly ?? '-' }} cm |
+                Biceps: {{ m.bicepsL ?? '-' }}/{{ m.bicepsR ?? '-' }} cm
+              </p>
+            </ion-label>
+
+            <ion-button
+              slot="end"
+              fill="clear"
+              color="danger"
+              (click)="deleteMeasurement(m.measurementId)"
+            >
+              Delete
+            </ion-button>
+          </ion-item>
+        }
+      </ion-list>
+
+    }
+
+  }
 </ion-content>

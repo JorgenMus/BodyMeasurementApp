@@ -20,5 +20,9 @@ export const routes: Routes = [
     path: 'user-create',
     loadComponent: () => import('./user-create/user-create.page').then( m => m.UserCreatePage)
   },
+  {
+    path: 'measurement-create',
+    loadComponent: () => import('./measurement-create/measurement-create.page').then( m => m.MeasurementCreatePage)
+  },
 
 ];

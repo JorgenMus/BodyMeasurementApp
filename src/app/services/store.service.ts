@@ -16,14 +16,14 @@ export interface UserData
 
 export interface UserMeasurementData
 {
-  id: string;
+  measurementId: string;
   userId: string;  // UserData.id
 
   measurementDateISO: ISODate;
 
   weightKg?: number;
 
-  // extend later:
+  // body measurements (cm)
   upperChest?: number;
   chest?: number;
   belly?: number;
@@ -59,8 +59,8 @@ export class StoreService {
     this.users.unshift(userData);
 
     // store user
-    Preferences.set({
-      key: 'KEY_USERS',
+    await Preferences.set({
+      key: KEY_USERS,
       value: JSON.stringify(this.users),
     });
 
@@ -70,23 +70,64 @@ export class StoreService {
     return userData;
   }
 
-  // method sets the selected user
-  async setSelectedUser(id: string | null): Promise<void> {
-    this.selectedUserId = id;
+  // method deletes a user
+  async deleteUser(userId: string): Promise<void>
+  {
+    // make sure arrays are up to date
+    await this.loadUsers();
+    await this.loadMeasurements();
 
-  
-    // if ID was given and ID exists among users store as selected user to preferences
-    if (id)
+    // check if user exists (if not return)
+    const exists = this.users.some(u => u.id === userId)
+    if (!exists)
+      return;
+
+    // delete user by filtering him out of the array
+    this.users = this.users.filter(u => u.id !== userId);
+    
+    // delete measurements by filtering them out (based on userId)
+    this.measurements = this.measurements.filter(m => m.userId !== userId);
+
+    // if deleted user was also selected user, delete selection
+    if (this.selectedUserId === userId)
     {
-      // check if id exists among users
-      // TODO
-      
-      // store selected user
-      await Preferences.set({key: KEY_SELECTED_USER, value: id});
+      this.selectedUserId = null;
+      await Preferences.remove({key: KEY_SELECTED_USER});
     }
 
-    // otherwise ignore
-    else return;
+    // save updated arrays to preferences
+    await Preferences.set({
+      key: KEY_USERS,
+      value: JSON.stringify(this.users),
+    });
+    await Preferences.set({
+      key: KEY_MEASUREMENTS,
+      value: JSON.stringify(this.measurements),
+    });
+  }
+
+  // method sets the selected user
+  async setSelectedUser(id: string | null): Promise<void>
+  {
+    // if no id given delete selection and return
+    if (!id)
+    {
+      this.selectedUserId = null;
+      await Preferences.remove({key:KEY_SELECTED_USER});
+      return;
+    }
+
+    // id was given check if such an user exists
+    const exists = this.users.some(u =>u.id === id);
+    if (!exists)
+      return;  // no such user exists
+
+    // user found set him as selected and update preferences
+    await Preferences.set({
+      key: KEY_SELECTED_USER,
+      value: id,
+    });
+    this.selectedUserId = id;
   }
 
   // get the data of the currently selected user
@@ -97,23 +138,86 @@ export class StoreService {
   // method for retrieving users from memory
   async loadUsers(): Promise<void>{
     // value is data from the memory (preferences - users)
-    const {value} = await Preferences.get({key: 'KEY_USERS'});
+    const {value} = await Preferences.get({key: KEY_USERS});
 
     // if data present, parse
     if (value)
     {
       this.users = JSON.parse(value);
     }
+    else
+      this.users = [];  // no users loaded
+  }
+
+  // method returns the ID of a currently selected user
+  async getSelectedUserId(): Promise<string | null> {
+    return this.selectedUserId;
   }
 
   // method for storing a measurement for a user
   async storeMeasurement(userMeasurementData: UserMeasurementData): Promise<void>
   {
-    // todo
+    // update measurements
+    await this.loadMeasurements();
+
+    // check if user from measurements exists
+    const userExists = this.users.some(u=> u.id === userMeasurementData.userId);
+
+    // if user does not exist return
+    if (!userExists)
+      return;
+
+    // store measurement data to the start of array
+    this.measurements.unshift(userMeasurementData);
+
+    // store to preferences updated data
+    await Preferences.set({
+      key: KEY_MEASUREMENTS,
+      value: JSON.stringify(this.measurements),
+    });
   }
 
+  // method for retrieving measurements from memory
   async loadMeasurements(): Promise<void>
   {
-    // todo
+    const {value} = await Preferences.get({
+      key: KEY_MEASUREMENTS,
+    });
+
+    // if data present, parse
+    if (value)
+    {
+      this.measurements = JSON.parse(value);
+    }
+    else
+    {
+      this.measurements = [];  // no data avaiable
+    }
+  }
+
+  // method for deleting a measurement based on its ID
+  async deleteMeasurement(measurementId: string): Promise<void>
+  {
+    // get current  data
+    await this.loadMeasurements();
+
+    // delete given measurement by filtering it out
+    this.measurements = this.measurements.filter(m=>m.measurementId === measurementId);
+
+    // update preferences
+    await Preferences.set({
+      key: KEY_MEASUREMENTS,
+      value: JSON.stringify(this.measurements),
+    });
+  }
+
+  // method for getting measurements data for a specific user
+  async getMeasurementsForUser(userId: string): Promise<UserMeasurementData[]>
+  {
+    // update data
+    await this.loadMeasurements();
+
+    // filter out only users measurements and return them
+    return this.measurements.filter(m=>m.userId === userId);
   }
 }

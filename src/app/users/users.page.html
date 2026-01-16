@@ -1,6 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Users</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="createNewUser()">Add</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,9 +14,42 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="ion-text-center">
-    <ion-label>
-      This is Users page
-    </ion-label>
-  </div>
+  <!-- If no users present just show information in text -->
+  @if (users.length === 0)
+  {
+    <div class="ion-padding ion-text-center">
+      <p>No users yet.</p>
+      <ion-button (click)="createNewUser()">Create first user</ion-button>
+    </div>
+  } @else {
+    <!-- if there are users show a list of them to choose from -->
+    <ion-list>
+      <!--for each user show his name, gender, height, DOB and if the user is selected -->
+      @for (u of users; track u.id)  
+      {
+        <ion-item
+        button
+        detail="false"
+        (click)="selectUser(u.id)"
+        [color]="u.id === selectedUserId ? 'success' : undefined">
+          <ion-label>
+            <h2>{{u.name}}</h2>
+            <p>{{u.gender}} | {{u.heightCm}} cm | {{u.dateOfBirth}}</p>
+          </ion-label>
+
+          <!-- if this user is also selected make it visible -->
+          @if (u.id === selectedUserId) {
+            <ion-note slot="end">Selected</ion-note>
+          }
+
+          <ion-button
+          slot="end"
+          fill="clear"
+          color="danger"
+          (click)="$event.stopPropagation(); deleteUser(u.id)"
+          >Delete</ion-button>
+        </ion-item>
+      }
+    </ion-list>
+  }
 </ion-content>

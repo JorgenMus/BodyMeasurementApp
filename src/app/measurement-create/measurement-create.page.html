@@ -1,13 +1,62 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>measurement-create</ion-title>
+    <ion-title>New Measurement</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">measurement-create</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-item>
+    <ion-label position="stacked">Date</ion-label>
+    <ion-input type="date" [formControl]="inputMeasurementDateISO"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Weight (kg)</ion-label>
+    <ion-input type="number" [formControl]="inputWeightKg"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Upper Chest (cm)</ion-label>
+    <ion-input type="number" [formControl]="inputUpperChest"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Belly / Waist (cm)</ion-label>
+    <ion-input type="number" [formControl]="inputBelly"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Bottom (cm)</ion-label>
+    <ion-input type="number" [formControl]="inputBottom"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Biceps Left (cm)</ion-label>
+    <ion-input type="number" [formControl]="inputBicepsL"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Biceps Right (cm)</ion-label>
+    <ion-input type="number" [formControl]="inputBicepsR"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Thigh Left (cm)</ion-label>
+    <ion-input type="number" [formControl]="inputThighL"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Thigh Right (cm)</ion-label>
+    <ion-input type="number" [formControl]="inputThighR"></ion-input>
+  </ion-item>
+
+  <div class="ion-padding-top">
+    <ion-button expand="block" (click)="save()">Save measurement</ion-button>
+  </div>
+
 </ion-content>

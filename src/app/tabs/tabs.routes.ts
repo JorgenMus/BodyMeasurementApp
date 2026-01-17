@@ -27,6 +27,11 @@ export const routes: Routes = [
           import('../user-create/user-create.page').then((m) => m.UserCreatePage),
       },
       {
+        path: 'measurement-create',  // form - when creating a new measurement
+        loadComponent: () =>
+          import('../measurement-create/measurement-create.page').then((m) => m.MeasurementCreatePage),
+      },
+      {
         path: '',
         redirectTo: '/tabs/users',
         pathMatch: 'full',

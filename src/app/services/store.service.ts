@@ -27,7 +27,7 @@ export interface UserMeasurementData
   upperChest?: number;
   chest?: number;
   belly?: number;
-  ass?: number;
+  bottom?: number;
   thighL?: number;
   thighR?: number;
   calfL?: number;

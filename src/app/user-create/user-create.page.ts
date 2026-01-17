@@ -45,7 +45,7 @@ export class UserCreatePage implements OnInit {
 
     await this.store.loadUsers();            // refresh in-memory cache
     await this.store.storeUser(user);        // just stores (no id creation)
-    await this.store.setSelectedUser(user.id);
-    this.router.navigate(['/tabs/users']);   // or '/tabs/measurements' i will decide later  // TODO
+    await this.store.setSelectedUser(user.id);  // set newly created user as selected
+    this.router.navigate(['/tabs/users']);   // return to users tab
   }
 }

@@ -1,36 +1,102 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { ISODate } from '../services/store.service';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonButtons } from '@ionic/angular/standalone';
+import { ISODate, StoreService, UserMeasurementData } from '../services/store.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-measurement-create',
   templateUrl: './measurement-create.page.html',
   styleUrls: ['./measurement-create.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle,
-    IonToolbar, CommonModule, FormsModule]
+  imports: [IonButtons, IonButton, IonLabel,
+    IonItem, IonContent, IonHeader, IonTitle,
+    IonToolbar, CommonModule, FormsModule,
+    ReactiveFormsModule ]
 })
+
 export class MeasurementCreatePage implements OnInit {
   // remember selected user the measurement is for
   selectedUserId: string | null = null;
 
   // fields in the form
-  measurementDateISO: ISODate = this.todayISO();  // autofill current date
-  weightKg: string = '';
-  upperChest: string = '';
-  belly: string = '';
-  bottom: string = '';
-  bicepsL: string = '';
-  bicepsR: string = '';
-  thighL: string = '';
-  thighR: string = '';
+  // auto filled current date (only this is mandatory field)
+  inputMeasurementDateISO =  new FormControl<ISODate>(this.todayISO(), { nonNullable: true });
+
+  inputWeightKg = new FormControl<number | null>(null);
+
+  inputUpperChest = new FormControl<number | null>(null);
+  inputBelly = new FormControl<number | null>(null);
+  inputBottom = new FormControl<number | null>(null);
+
+  inputBicepsL = new FormControl<number | null>(null);
+  inputBicepsR = new FormControl<number | null>(null);
+
+  inputThighL = new FormControl<number | null>(null);
+  inputThighR = new FormControl<number | null>(null);
 
 
-  constructor() { }
+  constructor(private store: StoreService, private router: Router) { }
 
   ngOnInit() {
+  }
+
+  // on enetering to measurement page, only loads selected user
+  // if no user was selected go back to the tab users
+  async ionViewWillEnter()
+  {
+    // load data
+    this.selectedUserId = await this.store.getSelectedUserId();
+
+    // if no user selected go to users tab
+    if (!this.selectedUserId)
+    {
+      // inform user to select a user and go back to users tab
+      alert('Please select a user to which you want to add a measurement.');
+      this.router.navigate(['tabs/users']);
+    }
+  }
+
+  async save()
+  {
+    // double check if user was selected (to which we want to store measurements)
+    if (!this.selectedUserId)
+      return;  // do nothing and return
+
+    // get tge data
+    const newMeasurement: UserMeasurementData = {
+      measurementId: crypto.randomUUID(),
+      userId: this.selectedUserId,
+
+      // assign values from  formfields
+      measurementDateISO: this.inputMeasurementDateISO.value,
+      
+      // optional values
+      weightKg: this.inputWeightKg.value ?? undefined,
+
+      upperChest: this.inputUpperChest.value ?? undefined,
+      belly: this.inputBelly.value ?? undefined,
+      bottom: this.inputBottom.value ?? undefined,
+
+      bicepsL: this.inputBicepsL.value ?? undefined,
+      bicepsR: this.inputBicepsR.value ?? undefined,
+
+      thighL: this.inputThighL.value ?? undefined,
+      thighR: this.inputThighR.value ?? undefined,
+    }
+
+    // save data
+    await this.store.storeMeasurement(newMeasurement);
+
+    // after saving go back to the tab measurements
+    this.router.navigate(['tabs/measurements']);
+  }
+
+  // helper method for canceling a measurement (goes back to measurements tab)
+  cancel()
+  {
+    this.router.navigate(['/tabs/measurements']);
   }
 
   // helper method for getting current ISODate in proper format

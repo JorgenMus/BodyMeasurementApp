@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonButton, IonButtons } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar,
+  IonItem, IonLabel, IonButton, IonButtons, IonInput } from '@ionic/angular/standalone';
 import { ISODate, StoreService, UserMeasurementData } from '../services/store.service';
 import { Router } from '@angular/router';
 
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './measurement-create.page.html',
   styleUrls: ['./measurement-create.page.scss'],
   standalone: true,
-  imports: [IonButtons, IonButton, IonLabel,
+  imports: [IonButtons, IonInput, IonButton, IonLabel,
     IonItem, IonContent, IonHeader, IonTitle,
     IonToolbar, CommonModule, FormsModule,
     ReactiveFormsModule ]
@@ -42,10 +43,27 @@ export class MeasurementCreatePage implements OnInit {
   ngOnInit() {
   }
 
+  // helper method resets fields in the form
+  private resetForm()
+  {
+    this.inputMeasurementDateISO.setValue(this.todayISO());
+    this.inputWeightKg.reset();
+    this.inputUpperChest.reset();
+    this.inputBelly.reset();
+    this.inputBottom.reset();
+    this.inputBicepsL.reset();
+    this.inputBicepsR.reset();
+    this.inputThighL.reset();
+    this.inputThighR.reset();
+  }
+
   // on enetering to measurement page, only loads selected user
   // if no user was selected go back to the tab users
   async ionViewWillEnter()
   {
+    // reset form
+    this.resetForm();
+
     // load data
     this.selectedUserId = await this.store.getSelectedUserId();
 
@@ -54,7 +72,7 @@ export class MeasurementCreatePage implements OnInit {
     {
       // inform user to select a user and go back to users tab
       alert('Please select a user to which you want to add a measurement.');
-      this.router.navigate(['tabs/users']);
+      this.router.navigate(['/tabs/users']);
     }
   }
 
@@ -90,7 +108,7 @@ export class MeasurementCreatePage implements OnInit {
     await this.store.storeMeasurement(newMeasurement);
 
     // after saving go back to the tab measurements
-    this.router.navigate(['tabs/measurements']);
+    this.router.navigate(['/tabs/measurements']);
   }
 
   // helper method for canceling a measurement (goes back to measurements tab)

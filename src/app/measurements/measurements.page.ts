@@ -6,6 +6,9 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonButtons, IonB
 import { StoreService, UserData, UserMeasurementData } from '../services/store.service';
 import { Router } from '@angular/router';
 
+// type definition used inside the class for nicer looking measurements
+type DisplayField = { label: string; value: number | string; unit?: string };
+
 @Component({
   selector: 'app-measurements',
   templateUrl: './measurements.page.html',
@@ -14,6 +17,7 @@ import { Router } from '@angular/router';
   imports: [IonItem, IonList, IonButton, IonButtons, IonContent, IonHeader, IonTitle,
     IonToolbar, CommonModule, FormsModule, IonLabel, IonNote]
 })
+
 export class MeasurementsPage implements OnInit {
 
   // variables for storing selected user and his measurements data
@@ -27,6 +31,33 @@ export class MeasurementsPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  // method returns the type defined above class (DisplayField)
+  // used for a nicer looking data, only filled data by user are visible
+  getDisplayFields(m: UserMeasurementData): DisplayField[] {
+    const out: DisplayField[] = [];
+
+    // weight data
+    if (m.weightKg != null) out.push({ label: 'Weight', value: m.weightKg, unit: 'kg' });
+    
+    // upper check data
+    if (m.upperChest != null) out.push({ label: 'Upper chest', value: m.upperChest, unit: 'cm' });
+    
+    // belly data
+    if (m.belly != null) out.push({ label: 'Belly', value: m.belly, unit: 'cm' });
+
+    // biceps data (left and right)
+    if (m.bicepsL != null || m.bicepsR != null) {
+      out.push({ label: 'Biceps (L/R)', value: `${m.bicepsL ?? '-'} / ${m.bicepsR ?? '-'}`, unit: 'cm' });
+    }
+
+    // Thighs data (left and right) - at least one value
+    if (m.thighL != null || m.thighR != null) {
+      out.push({ label: 'Thigh (L/R)', value: `${m.thighL ?? '-'} / ${m.thighR ?? '-'}`, unit: 'cm' });
+    }
+
+    return out;
   }
 
   // ionic automaticaly calls this whenever user enters this page

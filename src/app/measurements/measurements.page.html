@@ -42,11 +42,18 @@
           <ion-item>
             <ion-label>
               <h2>{{ m.measurementDateISO }}</h2>
-              <p>
-                Weight: {{ m.weightKg ?? '-' }} kg |
-                Belly: {{ m.belly ?? '-' }} cm |
-                Biceps: {{ m.bicepsL ?? '-' }}/{{ m.bicepsR ?? '-' }} cm
-              </p>
+              <div class="pills">
+                @for (f of getDisplayFields(m); track f.label) {
+                  <span class="pill">
+                    {{ f.label }}: {{ f.value }} @if (f.unit) { {{ f.unit }} }
+                  </span>
+                }
+
+                @if (getDisplayFields(m).length === 0) {
+                  <span class="pill empty">No values</span>
+                }
+              </div>
+
             </ion-label>
 
             <ion-button

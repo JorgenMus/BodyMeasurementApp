@@ -33,10 +33,11 @@
       @for (u of users; track u.id)  
       {
         <ion-item
-        button
-        detail="false"
-        (click)="selectUser(u.id)"
-        [color]="u.id === selectedUserId ? 'success' : undefined">
+          button
+          detail="false"
+          (click)="selectUser(u.id)"
+          [class.selected-user]="u.id === selectedUserId"
+        >
           <ion-label>
             <h2>{{u.name}}</h2>
             <p>{{u.gender}}</p>

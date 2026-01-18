@@ -10,3 +10,15 @@
   font-weight: 700;
   line-height: 1.1;
 }
+
+ion-item.selected-user {
+  --background: rgba(0, 255, 55, 0.08);   /* jemná modrá, průhledná */
+  --border-color: rgba(0, 122, 71, 0.39);
+  --border-width: 1px;
+  --border-style: solid;
+  --inner-padding-end: 10px;
+}
+
+ion-item.selected-user ion-label h2 {
+  font-weight: 700;
+}

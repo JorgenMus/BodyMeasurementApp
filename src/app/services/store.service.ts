@@ -58,6 +58,9 @@ export class StoreService {
     // newest user on top
     this.users.unshift(userData);
 
+    // sort from newest to oldest
+    this.measurements.sort((a, b) => b.measurementDateISO.localeCompare(a.measurementDateISO));
+
     // store user
     await Preferences.set({
       key: KEY_USERS,
@@ -227,7 +230,9 @@ export class StoreService {
     // update data
     await this.loadMeasurements();
 
-    // filter out only users measurements and return them
-    return this.measurements.filter(m=>m.userId === userId);
+    // filter out only users measurements, sort them new-to-old and return them
+    return this.measurements
+      .filter(m=>m.userId === userId)
+      .sort((a,b)=> b.measurementDateISO.localeCompare(a.measurementDateISO));
   }
 }

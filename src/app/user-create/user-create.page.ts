@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonList, IonRadio, IonRadioGroup, IonButton, IonLabel, IonDatetime, IonFabButton, IonFab } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonList, IonRadio, IonRadioGroup, IonButton, IonLabel, IonDatetime, IonFabButton, IonFab, IonButtons } from '@ionic/angular/standalone';
 import { ISODate, StoreService, UserData } from '../services/store.service';
 import { Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ type Gender = 'male'|'female';
   templateUrl: './user-create.page.html',
   styleUrls: ['./user-create.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonButtons, 
     ReactiveFormsModule, IonButton, IonRadioGroup,
     IonRadio, IonList, IonInput, IonItem, IonContent, IonHeader,
     IonTitle, IonToolbar, CommonModule, FormsModule,
@@ -35,7 +35,7 @@ export class UserCreatePage implements OnInit {
     // reset fields (otherwise they stay in memory)
     this.inputName.reset('');
     this.inputDateOfBirth.reset();
-    this.inputHeight.reset(0);
+    this.inputHeight.reset();
     this.inputGender.reset('male');
   }
 
@@ -74,5 +74,10 @@ export class UserCreatePage implements OnInit {
 
     // go back to users tab
     this.router.navigate(['/tabs/users']);   // return to users tab
+  }
+
+  cancel()
+  {
+    this.router.navigate(['/tabs/users']);
   }
 }

@@ -11,3 +11,22 @@
   display: block;
   border-radius: 12px;
 }
+
+.title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 8px;
+}
+
+.title-main {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.title-sub {
+  font-size: 13px;
+  opacity: 0.75;
+  line-height: 1.1;
+}

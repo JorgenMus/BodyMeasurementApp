@@ -1,10 +1,21 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Stats</ion-title>
+
+    <div class="title-block">
+      <div class="title-main">Statistics</div>
+      <div class="title-sub">
+        @if (selectedUser) {
+          {{ selectedUser.name }}
+        } @else {
+          No user selected
+        }
+      </div>
+    </div>
 
     <ion-buttons slot="end">
-      <ion-button (click)="goToUsers()">Users</ion-button>
+      <ion-button (click)="goToUsers()">users</ion-button>
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
@@ -18,12 +29,6 @@
     </div>
 
   } @else {
-
-    <div class="ion-margin-bottom">
-      <h2 style="margin: 0;">{{ selectedUser.name }}</h2>
-      <p style="margin: 4px 0 0 0; opacity: 0.8;">Charts from your measurements</p>
-    </div>
-
     @if (measurements.length === 0) {
       <div class="ion-text-center">
         <p>No measurements yet.</p>

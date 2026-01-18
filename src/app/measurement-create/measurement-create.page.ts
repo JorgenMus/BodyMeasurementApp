@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,
   IonItem, IonLabel, IonButton, IonButtons, IonInput } from '@ionic/angular/standalone';
 import { ISODate, StoreService, UserMeasurementData } from '../services/store.service';

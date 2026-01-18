@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonList, IonRadio, IonRadioGroup, IonButton, IonLabel, IonDatetime, IonFabButton, IonFab, IonButtons } from '@ionic/angular/standalone';
+import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonList, IonRadio, IonRadioGroup, IonButton, IonLabel, IonButtons } from '@ionic/angular/standalone';
 import { ISODate, StoreService, UserData } from '../services/store.service';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,7 @@ type Gender = 'male'|'female';
     ReactiveFormsModule, IonButton, IonRadioGroup,
     IonRadio, IonList, IonInput, IonItem, IonContent, IonHeader,
     IonTitle, IonToolbar, CommonModule, FormsModule,
-    IonLabel, IonDatetime]
+    IonLabel]
 })
 export class UserCreatePage implements OnInit {
   inputName = new FormControl<string>('');

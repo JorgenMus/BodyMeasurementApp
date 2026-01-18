@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonButtons, IonButton, IonList, IonItem, IonNote, IonFab, IonFabButton, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar,
+  IonLabel, IonButtons, IonButton, IonList,
+  IonItem, IonNote } from '@ionic/angular/standalone';
 
 import {Router} from '@angular/router';
 import { StoreService, UserData } from '../services/store.service';
@@ -11,8 +13,7 @@ import { StoreService, UserData } from '../services/store.service';
   templateUrl: './users.page.html',
   styleUrls: ['./users.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonFabButton, IonFab,
-    IonNote, IonItem, IonList, IonButton,
+  imports: [IonNote, IonItem, IonList, IonButton,
     IonButtons, IonLabel, IonContent,
     IonHeader, IonTitle, IonToolbar,
     CommonModule, FormsModule]

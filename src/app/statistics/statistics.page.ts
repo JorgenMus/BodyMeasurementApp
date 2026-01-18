@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle,
-  IonToolbar, IonLabel, IonButton, IonButtons } from '@ionic/angular/standalone';
+import { IonContent, IonHeader,
+  IonToolbar, IonButton, IonButtons } from '@ionic/angular/standalone';
 
 import { StoreService, UserData, UserMeasurementData } from '../services/store.service';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './statistics.page.html',
   styleUrls: ['./statistics.page.scss'],
   standalone: true,
-  imports: [IonButtons, IonButton, IonLabel, IonContent, IonHeader, IonTitle,
+  imports: [IonButtons, IonButton, IonContent, IonHeader,
     IonToolbar, CommonModule, FormsModule]
 })
 export class StatisticsPage implements OnInit {

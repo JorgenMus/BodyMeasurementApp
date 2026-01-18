@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonButtons, IonButton, IonList, IonItem, IonNote } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonToolbar, IonLabel, IonButtons, IonButton, IonList, IonItem } from '@ionic/angular/standalone';
 
 import { StoreService, UserData, UserMeasurementData } from '../services/store.service';
 import { Router } from '@angular/router';
@@ -14,8 +14,8 @@ type DisplayField = { label: string; value: number | string; unit?: string };
   templateUrl: './measurements.page.html',
   styleUrls: ['./measurements.page.scss'],
   standalone: true,
-  imports: [IonItem, IonList, IonButton, IonButtons, IonContent, IonHeader, IonTitle,
-    IonToolbar, CommonModule, FormsModule, IonLabel, IonNote]
+  imports: [IonItem, IonList, IonButton, IonButtons, IonContent, IonHeader,
+    IonToolbar, CommonModule, FormsModule, IonLabel]
 })
 
 export class MeasurementsPage implements OnInit {
